@@ -15,7 +15,10 @@ completion = client.chat.completions.create(
     # model参数为当前模型名称，可按需要更换模型名称
     model="qwen-plus",  
     # messages参数为用户输入对话内容
-    # role参数为角色。system(大模型身份)、user(用户)
+    # role参数为角色。system(大模型身份)、user(用户)、assistant(助手)
+    #       system ：全局身份，伴随整个复杂场景存在
+    #       user ：用户角色给大模型提出的问题
+    #       assistant ：多轮对话中用于上下文的记忆维持，把上一次交互的整个内容给assistant，再结合本次提问得出结果
     messages=[
         {"role": "system", "content": "You are a helpful assistant."},
         {"role": "user", "content": "你是谁？"},

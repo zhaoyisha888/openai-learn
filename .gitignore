@@ -1,2 +1,43 @@
 # 忽略.idea文件夹
 .idea/
+
+# Python临时和缓存文件
+__pycache__/
+*.py[cod]
+*.pyc
+*.pyo
+*.pyd
+.Python
+
+# 虚拟环境
+venv/
+env/
+ENV/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+
+# IDE和编辑器
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS系统文件
+.DS_Store
+Thumbs.db
+
+# 其他
+.env
+.env.local
+*.log

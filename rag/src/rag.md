@@ -42,18 +42,8 @@
 2. Advanced RAG
 3. Modular RAG
 
-### Native RAG
+![RAG研究范式](../../image/image-7.png)
 
-```mermaid
-graph TD
-    User[User] --> Query[Query]
-    Documents[Documents] --> DocumentChunks[Document Chunks]
-    DocumentChunks --> VectorDatabase[Vector Database]
-    Query --> RelatedChunks
-    VectorDatabase --> RelatedChunks[Related Document Chunks]
-    RelatedChunks --> Prompt[Prompt]
-    Prompt --> LLM[LLM]
-```
 
 #### 文档加载和分块
 
@@ -62,5 +52,4 @@ graph TD
 >   - 按固定字符数结合滑动窗口(overlapping window)，防止语义不连贯
 >   - 按照句子来切分
 >   - 递归方法：RecursiveCharacterTextSplitter
-
 

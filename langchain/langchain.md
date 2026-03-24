@@ -84,28 +84,43 @@
 模型使用过程可以拆解成三块：提示词、调用模型、输出解析，在langchain中被统称为 Model I/O
 
 1. **提示词模板 (prompt template)**：langchain模板允许动态选择输入，使用变量插入模板，根据不同的参数生成不同的提示。
-    - LLM提示模板PromptTemplate :常用的String 提示模板
-    - 聊天提示模板ChatPromptTemplate :常用的Chat提示模板，用于组合各种角色的消息模板，传入聊天模型。
-    - 少样本提示模板FewShotPromptTemplate 、提示模板部分格式化、管道提示模板PipelinePrompt 等等。
+>    - LLM提示模板PromptTemplate :常用的String 提示模板
+>    - 聊天提示模板ChatPromptTemplate :常用的Chat提示模板，用于组合各种角色的消息模板，传入聊天模型。
+>    - 少样本提示模板FewShotPromptTemplate 、提示模板部分格式化、管道提示模板PipelinePrompt 等等。
 2. **语言模型 (LM)**：langchain提供通用接口调用不同类型的语言模型，支持三大类：
-    - 大语言模型（LLM）包装器：相关OpenAI的API在2023.7最后更新，只能访问老旧的历史遗留版本  
-      - 文本补全模型 
-      - 文本字符串作输入
-      - 补全字符串为输出
-      - 可理解成一问一答
-   - 聊天模型（Chat Model）包装器：主要是OpenAI的ChatGPT系列 ChatOpenAI，设计目标是处理复杂对话场景
-     - 由LLM支持，但API更结构化
-     - 一系列聊天消息列表作为输入
-     - 返回聊天消息
-     - 引入历史消息生成连续上下文的对话任务
-   - 文本嵌入模型（Embedding Model）(严格来说不算Model I/O部分)
-3. **输出解析 (output parse)r**：利用langchain输出解析功能，提取模型输出所需信息，避免冗余数据，同时将非结构文本转换为可处理的结构化数据，提高信息处理效率
-   - 输出解析器负责获取LLM的输出并将其转换为更合适的格式。
-   - 有许多不同类型的输出解析器：
-     - StrOutputParser 、
-     - CommaSeparatedListOutputParser 、
-     - DatetimeoutputParser、
-     - JsonOutputParser 、
-     - XMLOutputParser 等等
+>    - 大语言模型（LLM）包装器：相关OpenAI的API在2023.7最后更新，只能访问老旧的历史遗留版本  
+>      - 文本补全模型 
+>      - 文本字符串作输入
+>      - 补全字符串为输出
+>      - 可理解成一问一答
+>   - 聊天模型（Chat Model）包装器：主要是OpenAI的ChatGPT系列 ChatOpenAI，设计目标是处理复杂对话场景
+>     - 由LLM支持，但API更结构化
+>     - 一系列聊天消息列表作为输入
+>     - 返回聊天消息
+>     - 引入历史消息生成连续上下文的对话任务
+>   - 文本嵌入模型（Embedding Model）(严格来说不算Model I/O部分)
+3. **输出解析 (output parser)**：利用langchain输出解析功能，提取模型输出所需信息，避免冗余数据，同时将非结构文本转换为可处理的结构化数据，提高信息处理效率
+>   - 输出解析器负责获取LLM的输出并将其转换为更合适的格式。
+>   - 有许多不同类型的输出解析器：
+>     - StrOutputParser 、
+>     - CommaSeparatedListOutputParser 、
+>     - DatetimeoutputParser、
+>     - JsonOutputParser 、
+>     - XMLOutputParser 等等
 
 ### 链(Chains)
+
+链就是把多个步骤像“流水线”一样串联起来，数据自动从上一步流到下一步。
+
+> **QA链**：
+> `问题` ---整合--->  `提示词模版` ---输入---> `模型处理请求` ---输出---> `输出解析器解析` ---返回---> `答案`
+>
+> **使用形式**：
+> ```python
+> # 链式调用，从左到右执行
+> chain = chat_template | client | parser
+> ```
+> - 一行调用完成所有步骤
+> - 清晰：| 符号直观表达了数据流向
+> - 可复用：链可以像变量一样到处传递
+> - 可组合：可以插入新的处理环节
